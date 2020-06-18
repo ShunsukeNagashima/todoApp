@@ -1,4 +1,6 @@
-export const createDate = () => {
+export const createDate = (startYear: number = new Date().getFullYear(),
+                           startMonth: number = new Date().getMonth() + 1,
+                           startDay: number = new Date().getDate()) => {
   const isLeapYear = (year: number) => ((year % 4 === 0) && (year % 100 !== 0)) || (year % 400 === 0);
   const countDatesOfFeb = (year: number) => isLeapYear(year) ? 29 : 28;
 
@@ -27,7 +29,6 @@ export const createDate = () => {
   const today = new Date();
   const thisYear = today.getFullYear();
   const thisMonth = today.getMonth() + 1;
-  const thisDate = today.getDate();
 
   let datesOfYear= [31, countDatesOfFeb(thisYear), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
@@ -49,7 +50,7 @@ export const createDate = () => {
     });
 
     // ロード時
-    createOption('year', thisYear, thisYear + 5, thisYear);
-    createOption('month', 1, 12, thisMonth);
-    createOption('date', 1, datesOfYear[thisMonth - 1], thisDate);
+    createOption('year', thisYear, thisYear + 5, startYear);
+    createOption('month', 1, 12, startMonth);
+    createOption('date', 1, datesOfYear[thisMonth - 1], startDay);
 }

@@ -7,33 +7,175 @@
 
 html {
   box-sizing: border-box;
-  font-size: 62.5%; }
+  font-size: 62.5%;
+  font-family: sans-serif;
+  background-color: #bce2e8; }
 
 .container {
   display: grid;
   grid-template-columns: [full-start] minmax(6rem, 1fr) [center-start] repeat(8, [col-start] minmax(min-content, 14rem) [col-end]) [center-end] minmax(6rem, 1fr) [full-end];
+  grid-template-rows: 5rem calc(90vh - 5rem);
   grid-row-gap: 4rem; }
 
 .todoList {
   grid-column: center-start / center-end;
-  grid-row: 3 / 4;
+  grid-row: 2 / 3;
   display: flex; }
 
 .activeList, .finishedList {
   border: 1px solid #ccc;
-  height: 40vh;
-  width: 45%;
+  padding: 2rem;
+  width: 48%;
+  background-color: white;
   box-shadow: 0rem 2rem 3rem rgba(0, 0, 0, 0.3);
   text-align: center;
   display: inline-block;
   overflow-y: scroll; }
 
+.activeList__item, .finishedList__item, .nonActiveItem {
+  list-style: none;
+  margin: 0 auto;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  padding: .5rem 1rem;
+  width: 95%;
+  height: 3rem;
+  box-shadow: 0rem 2rem 1rem rgba(0, 0, 0, 0.08);
+  font-size: 1.2rem;
+  display: grid;
+  align-items: center;
+  grid-template-columns: max-content 1fr max-content; }
+  .activeList__item:not(:last-child), .finishedList__item:not(:last-child), .nonActiveItem:not(:last-child) {
+    margin-bottom: 1rem; }
+
 .activeList {
   margin-right: auto; }
+  .activeList__item {
+    background-color: rgba(0, 128, 0, 0.2); }
+  .activeList__link {
+    text-decoration: none;
+    grid-column: 1 / 2; }
+  .activeList__due {
+    grid-column: 4 / 5; }
 
-.newTodo {
-  grid-column: center-start / center-end; }
+.finishedList__item {
+  background-color: grey; }
 
-form {
-  display: flex;
-  flex-direction: column; }
+.finishedList__link {
+  text-decoration: none;
+  grid-column: 1 / 2; }
+
+.finishedList__due {
+  grid-column: 3 / 4; }
+
+.expired {
+  background-color: rgba(255, 0, 0, 0.2); }
+
+.todoForm {
+  grid-column: col-start 3 / col-end 6;
+  padding: 2rem; }
+  .todoForm__form {
+    display: grid;
+    grid-row-gap: 2rem;
+    justify-items: start; }
+  .todoForm__title {
+    width: 50rem;
+    font-size: 1.5rem; }
+  .todoForm__memo {
+    font-size: 1.5rem; }
+  .todoForm__due {
+    font-size: 1.5rem;
+    width: 8rem;
+    text-align: center; }
+  .todoForm .todoForm__btn, .todoForm .todoForm__delbtn {
+    justify-self: center;
+    padding: 1.5rem 2rem;
+    border-radius: 100px;
+    border: 1px solid #ccc;
+    box-shadow: 0rem 1rem 1rem rgba(0, 0, 0, 0.1);
+    transition: all .2s; }
+    .todoForm .todoForm__btn:hover, .todoForm .todoForm__delbtn:hover {
+      transform: translateY(-0.3rem) scale(1.01); }
+    .todoForm .todoForm__btn:active, .todoForm .todoForm__delbtn:active {
+      transform: translateY(0) scale(1); }
+  .todoForm__btn {
+    background-image: radial-gradient(circle, rgba(255, 255, 153, 0.8), rgba(255, 255, 102, 0.8)); }
+  .todoForm__delbtn {
+    background-color: red; }
+
+.btnGroup {
+  margin-top: 3rem;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); }
+
+.fullTodo {
+  float: left;
+  z-index: 10; }
+
+.status {
+  display: grid;
+  grid-template-rows: repeat(2, min-content);
+  grid-template-columns: repeat(3, max-content);
+  grid-column-gap: 2rem; }
+  .status__title {
+    grid-row: 1 / 2;
+    grid-column: 1 / -1;
+    margin-bottom: .5rem; }
+
+.radio__input {
+  display: none; }
+
+.radio__label {
+  font-size: 1.2rem;
+  display: grid;
+  grid-template-columns: repeat(2, max-content);
+  grid-column-gap: 1rem;
+  align-items: center; }
+
+.radio__button {
+  height: 3rem;
+  width: 3rem;
+  border-radius: 50%;
+  border: 5px solid #55c57a;
+  display: block;
+  position: relative; }
+  .radio__button::after {
+    content: "";
+    height: 1.2rem;
+    width: 1.2rem;
+    position: absolute;
+    border-radius: 50%;
+    background-color: #55c57a;
+    display: block;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0; }
+
+.radio__input:checked + .radio__label .radio__button::after {
+  opacity: 1; }
+
+.errMsg {
+  font-size: 2rem;
+  color: #FF3333;
+  font-weight: bold; }
+
+.heading1 {
+  font-size: 3rem; }
+
+.mg_bottom_small {
+  margin-bottom: 2rem; }
+
+.header {
+  grid-column: full-start / full-end;
+  font-size: 3rem; }
+  .header__list {
+    list-style-type: none;
+    display: flex;
+    justify-content: center;
+    padding-top: 2rem; }
+  .header__item {
+    margin-right: 3rem; }
+  .header__link:visited, .header__link:link {
+    text-decoration: none;
+    color: #fff; }

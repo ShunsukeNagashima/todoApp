@@ -1,3 +1,7 @@
+// COLOR VALUABLES
+$color-red: #FF3333;
+$color-primary: #bce2e8;
+
 // UNIVERSAL SETUP
 *,
 *::before,
@@ -10,10 +14,13 @@
 html {
     box-sizing: border-box;
     font-size: 62.5%;  // 1rem = 10px(10px / 16px -> 62.5)
+    font-family: sans-serif;
+    background-color: $color-primary;
 }
 
 .container {
     display: grid;
     grid-template-columns: [full-start] minmax(6rem,1fr) [center-start] repeat(8, [col-start] minmax(min-content, 14rem) [col-end]) [center-end] minmax(6rem, 1fr) [full-end]; // 1140 / 8 = 142.5 -> 140px
+    grid-template-rows: 5rem calc(90vh - 5rem);
     grid-row-gap: 4rem;
 }

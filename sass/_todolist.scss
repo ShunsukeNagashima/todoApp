@@ -1,25 +1,83 @@
 .todoList {
     grid-column: center-start / center-end;
-    grid-row: 3 / 4;
+    grid-row: 2 / 3;
 
     display: flex;
 }
 
 %list {
     border: 1px solid #ccc;
-    height: 40vh;
-    width: 45%;
+    padding: 2rem;
+    width: 48%;
+    background-color: white;
     box-shadow: 0rem 2rem 3rem rgba(#000, .3);
     text-align: center;
     display: inline-block;
     overflow-y: scroll;
 }
 
+%item {
+    list-style: none;
+    margin: 0 auto;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    padding: .5rem 1rem;
+    width: 95%;
+    height: 3rem;
+    box-shadow: 0rem 2rem 1rem rgba(#000, .08);
+    font-size: 1.2rem;
+
+    display: grid;
+    align-items: center;
+    grid-template-columns: max-content 1fr max-content;
+
+    &:not(:last-child) {
+        margin-bottom: 1rem;
+    }
+}
+
 .activeList {
     @extend %list;
     margin-right: auto;
+
+    &__item {
+        @extend %item;
+        background-color: rgba(green, .2);
+    }
+
+    &__link {
+        text-decoration: none;
+        grid-column: 1 / 2;
+    }
+
+    &__due {
+        grid-column: 4 / 5;
+    }
 }
 
 .finishedList {
     @extend %list;
+
+    &__item {
+        @extend %item;
+        background-color: grey
+    }
+
+    &__link {
+        text-decoration: none;
+        grid-column: 1 / 2;
+    }
+
+    &__due {
+        grid-column: 3 / 4;
+    }
+}
+
+.nonActiveItem {
+    @extend %item;
+
+}
+
+.expired {
+    background-color: rgba(red, .2);
 }
