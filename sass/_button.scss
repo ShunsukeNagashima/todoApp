@@ -1,0 +1,38 @@
+.button {
+  height: 4rem;
+  width: 12rem;
+  display: inline-block;
+  border-radius: 3px;
+  background-color: white;
+  border: 1px solid #fa923f;
+  color: #fa923f;
+  box-shadow: 0rem 1rem 3rem rgba(#000, .2);
+  transition: all .2s;
+
+  &:focus {
+    outline: none;
+  }
+
+  &:hover {
+    background: #fa923f;
+    border-color: #e27712;
+    color: white;
+  }
+
+  &:active {
+    transform: translateY(.2rem);
+  }
+
+  &--danger {
+    background: #830000;
+    border-color: #830000;
+    color: white;
+
+    &:hover,
+    &:active {
+      background: #f52d2d;
+      border-color: #ee2c2c;
+    }
+
+  }
+}

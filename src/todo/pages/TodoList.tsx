@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { AppState } from '../store/store';
+import { AppState } from '../../store/store';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
-import classes from '../App.module.css';
+
+import Spinner from '../../shared/components/UIElements/Spinner';
+import '../../App.css';
 import classNames from 'classnames';
 
-type TodoListProps = AppState & RouteComponentProps<{id: string}>
+
+type TodoListProps =  AppState & RouteComponentProps<{id: string}>
 
 const TodoList: React.FC<TodoListProps> = (props: TodoListProps) => {
 
@@ -19,15 +22,6 @@ const TodoList: React.FC<TodoListProps> = (props: TodoListProps) => {
             setFormatedDate(parseInt(`${yyyy}${mm}${dd}`))
         }, [])
 
-        const activeList = props.todos.filter(todo => todo.status !== 'completed');
-        const finishedList = props.todos.filter(todo => todo.status === 'completed');
-
-        const styleForH1 = classNames(
-            classes.heading1,
-            classes.mg_bottom_small
-        );
-
-
         const todoSelectedHandler = ( id: string | undefined ) => {
             if ( typeof id === 'undefined') {
                 throw new Error ('YOU SHOULD CHOOSE EXISISTED TODO');
@@ -35,34 +29,45 @@ const TodoList: React.FC<TodoListProps> = (props: TodoListProps) => {
             props.history.push('/todos/' + id);
         }
 
+        const activeList = props.todos.filter(todo => todo.status !== 'completed');
+        const finishedList = props.todos.filter(todo => todo.status === 'completed');
+
+        if(props.loading) {
+            return (
+                <div className="todoList">
+                    <Spinner />
+                </div>
+            )
+        }
+
+
         return (
-            <div className={classes.todoList}>
-                <div className={classes.activeList}>
-                <h1 className={styleForH1}>TODO</h1>
+            <div className="todoList">
+                <div className="activeList">
+                <h1 className="heading1 mg_bottom_small">TODO</h1>
                     <ul>
                         {activeList.map(listEl =>
                             <li key={listEl.id}
                                 onClick={() => todoSelectedHandler(listEl.id)}
                                 className={classNames(
-                                    listEl.status === 'active'? classes.activeList__item: classes.nonActiveItem,
-                                    parseInt(listEl.due) < formatedDate ? classes.expired : null)
+                                    listEl.status === 'active'? "activeList__item": "nonActiveItem",
+                                    parseInt(listEl.due) < formatedDate ? "expired" : null)
                                 }>
-                                <p className={classes.finishedList__link}>{listEl.title.length > 20 ? `${listEl.title.slice(0, 19)}...` : listEl.title}</p>
-                                <p className={classes.activeList__due}>
+                                <p className="finishedList__link">{listEl.title.length > 20 ? `${listEl.title.slice(0, 19)}...` : listEl.title}</p>
+                                <p className="activeList__due">
                                     {`${listEl.due.slice(0,4)}/${listEl.due.slice(4,6)}/${listEl.due.slice(6,8)}`}
                                 </p>
                             </li>
                         )}
                     </ul>
                 </div>
-
-                <div className={classes.finishedList}>
-                    <h1 className={styleForH1}>FINISHED</h1>
+                <div className="finishedList">
+                <h1 className="heading1 mg_bottom_small">FINISHED</h1>
                     <ul>
                         {finishedList.map(listEl =>
-                            <li key={listEl.id} onClick={() => todoSelectedHandler(listEl.id)} className={classes.finishedList__item}>
-                                <p className={classes.finishedList__link}>{listEl.title.length > 20 ? `${listEl.title.slice(0, 19)}...` : listEl.title}</p>
-                                <p className={classes.finishedList__due}>
+                            <li key={listEl.id} onClick={() => todoSelectedHandler(listEl.id)} className="finishedList__item">
+                                <p className="finishedList__link">{listEl.title.length > 20 ? `${listEl.title.slice(0, 19)}...` : listEl.title}</p>
+                                <p className="finishedList__due">
                                     {`${listEl.due.slice(0,4)}/${listEl.due.slice(4,6)}/${listEl.due.slice(6,8)}`}
                                 </p>
                             </li>
@@ -70,9 +75,7 @@ const TodoList: React.FC<TodoListProps> = (props: TodoListProps) => {
                     </ul>
                 </div>
             </div>
-
         );
 };
-
 
 export default withRouter(TodoList);

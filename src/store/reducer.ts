@@ -4,33 +4,40 @@ import { Todo } from '../todo.model';
 
 export interface State {
     todos: Todo[],
+    loading: boolean
 }
 
 const initialState: State = {
     todos:[],
+    loading: false
 }
 
 const reducer = reducerWithInitialState(initialState)
     .case(storeTodo.async.started, state => {
         return {
-            ...state
+            ...state,
+            loading: true
         }
     })
     .case(storeTodo.async.done, (state, res) => {
         console.log(typeof(res.result.name))
         return {
             ...state,
-            todos: state.todos.concat({...res.params, id: res.result.name}),        }
+            todos: state.todos.concat({...res.params, id: res.result.name}),
+            loading: false
+        }
     })
     .case(storeTodo.async.failed, state => {
         return {
             ...state,
-            Error
+            Error,
+            loading: false
         }
     })
     .case(fetchTodos.async.started, state => {
         return {
-            ...state
+            ...state,
+            loading: true
         }
     })
     .case(fetchTodos.async.done, (state, res) => {
@@ -43,34 +50,40 @@ const reducer = reducerWithInitialState(initialState)
         }
         return {
             ...state,
-            todos: fetchedTodos
+            todos: fetchedTodos,
+            loading: false
         }
     })
     .case(fetchTodos.async.failed, state => {
         return {
             ...state,
-            Error
+            Error,
+            loading: false
         }
     })
     .case(loadTodo.async.started, state => {
         return {
-            ...state
+            ...state,
+            loading: true
         }
     })
     .case(loadTodo.async.done, (state, res) => {
         return {
-            ...state
+            ...state,
+            loading: false
         }
     })
     .case(loadTodo.async.failed, state => {
         return {
             ...state,
+            loading: false,
             Error
         }
     })
     .case(editTodo.async.started, state => {
         return {
-            ...state
+            ...state,
+            loading: true
         }
     })
     .case(editTodo.async.done, (state, res) => {
@@ -79,30 +92,36 @@ const reducer = reducerWithInitialState(initialState)
         newTodos.splice(newTodos.indexOf(editedTodo), 1, {...res.params[1], id: res.params[0]})
         return {
             ...state,
-            todos: newTodos
+            todos: newTodos,
+            loading: false
         }
     })
     .case(editTodo.async.failed, state => {
         return {
             ...state,
-            Error
+            Error,
+            loading: false
         }
     })
     .case(deleteTodo.async.started, state => {
         return {
-            ...state
+            ...state,
+            loading: true
         }
     })
     .case(deleteTodo.async.done, (state, res) => {
 
         return {
             ...state,
-            todos: state.todos.filter(todo => todo.id !== res.params)
+            todos: state.todos.filter(todo => todo.id !== res.params),
+            loading: false
         }
     })
     .case(deleteTodo.async.failed, (state) => {
         return {
-            ...state
+            ...state,
+            Error,
+            loading: false
         }
     })
 

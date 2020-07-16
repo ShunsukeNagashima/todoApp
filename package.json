@@ -17,6 +17,7 @@
     "classnames": "^2.2.6",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-hook-form": "^6.0.5",
     "react-redux": "^7.2.0",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
@@ -29,7 +30,7 @@
     "typescript-fsa-redux-thunk": "^2.1.9"
   },
   "scripts": {
-    "watch:sass": "node-sass sass/main.scss src/App.module.css -w",
+    "watch:sass": "node-sass sass/main.scss src/App.css -w",
     "devserver": "react-scripts start",
     "start": "npm-run-all --parallel devserver watch:sass",
     "build": "react-scripts build",
